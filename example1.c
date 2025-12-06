@@ -1,38 +1,47 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+#define GLAD_GL_IMPLEMENTATION // Necessary for headeronly version.
+#include "glad.h"
+
 #include "glfw3.h"
 
 
-int main(void)
-{
-    GLFWwindow* window;
+const GLuint WIDTH = 800, HEIGHT = 600;
 
-    /* Initialize the library */
-    if (!glfwInit())
-        return -1;
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
 
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        return -1;
-    }
+#define GLAD_VERSION_MAJOR(version) (version / 10000)
+#define GLAD_VERSION_MINOR(version) (version % 10000)
 
-    /* Make the window's context current */
+int main(void) {
+    glfwInit();
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "[glad] GL with GLFW", NULL, NULL);
     glfwMakeContextCurrent(window);
 
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        /* Render here */
+    glfwSetKeyCallback(window, key_callback);
+
+    int version = gladLoadGL();
+    printf("GL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+
+    while (!glfwWindowShouldClose(window)) {
+        glfwPollEvents();
+
+        glClearColor(0.7f, 0.9f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        /* Swap front and back buffers */
         glfwSwapBuffers(window);
-
-        /* Poll for and process events */
-        glfwPollEvents();
     }
 
     glfwTerminate();
+
     return 0;
 }

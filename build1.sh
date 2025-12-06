@@ -1,1 +1,1 @@
-clang -v -I./glfw/include/GLFW -I./glfw/include -o example1.o example1.c -L$(pwd)/glfw/build/src -Wl,-rpath=/$(pwd)/glfw/build/src -lGL -lglfw
+clang -v -Wall -Wextra -pedantic -I./glfw/include/GLFW -I./glfw/include -I./glfw/deps/glad/ -I./glad/include/glad ./glad/src/glad.c -o example1.o example1.c -L$(pwd)/glfw/build/src -Wl,-rpath=/$(pwd)/glfw/build/src -lglfw
