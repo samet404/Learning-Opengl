@@ -1,1 +1,1 @@
-clang -v -Wall -Wextra -pedantic -I./glfw/include/GLFW -I./glfw/include -I./glfw/deps/glad/ -I./glad/include/glad ./glad/src/glad.c -o triangle.o triangle.c -L$(pwd)/glfw/build/src -Wl,-rpath=/$(pwd)/glfw/build/src -lglfw
+clang -v -Wall -Wextra  -I./glfw/include/GLFW -I./glfw/include -I./glfw/deps/glad/ -I./glad/include/glad ./glad/src/glad.c -o triangle.o triangle.c -L$(pwd)/glfw/build/src -Wl,-rpath=/$(pwd)/glfw/build/src -lglfw
