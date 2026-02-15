@@ -1,0 +1,1 @@
+clang -v -Wall -Wextra -pedantic -I./glfw/include/GLFW -I./glfw/include -I./glfw/deps/glad/ -I./glad/include/glad ./glad/src/glad.c -o $1.o $1.c -L$(pwd)/glfw/build/src -Wl,-rpath=/$(pwd)/glfw/build/src -lglfw
