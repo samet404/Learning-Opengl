@@ -8,6 +8,7 @@ uniform float u_time;
 
 void main() {
   vec2 st = gl_FragCoord.xy / u_resolution;
+  vec2 nm = gl_FragCoord.xy / u_mouse;
   if (gl_FragCoord.x > u_mouse.x - 10.0 && gl_FragCoord.x < u_mouse.x + 10.0 && (u_resolution[1] - gl_FragCoord.y) > u_mouse.y - 10.0 && (u_resolution[1] - gl_FragCoord.y) < u_mouse.y + 10.0 ) {
     st = vec2(0.0, 0.0);
   }
