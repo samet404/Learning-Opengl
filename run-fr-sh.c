@@ -100,6 +100,7 @@ void* hotReloadCheck(void* fragmentFileName) {
 // GLFW - OPENGL LAYER
 // =================================================
 
+char windowFocused = 0;
 
 static void error_callback(int error, const char* description) {
     fprintf(stderr, "Error: %s\n", description);
@@ -109,6 +110,13 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
+
+void window_focus_callback(GLFWwindow* window, int focused)
+{
+  if (focused) windowFocused = 1;
+  else windowFocused = 0;
+}
+
 
 char* readFragFile(char* fileName) {
     printf("Fragment file name: %s\n", fileName);
@@ -260,7 +268,7 @@ int main(int argc, char *argv[]) {
 
 
   glfwSetKeyCallback(window, key_callback);
-  
+  glfwSetWindowFocusCallback(window, window_focus_callback);
   glfwMakeContextCurrent(window);
   gladLoadGL();
   glfwSwapInterval(1);
@@ -306,7 +314,7 @@ int main(int argc, char *argv[]) {
     const float ratio = width / (float)height;
     glUniform1f(uTimeLocation, (float)timeSec/10);
     glUniform2f(uresLocation, (float) width, (float) height); 
-    glUniform2f(uMouseLocation, (float) mxpos, (float) mypos);
+    if (windowFocused) glUniform2f(uMouseLocation, (float) mxpos, (float) mypos);
     
 
     glViewport(0, 0, width, height);
